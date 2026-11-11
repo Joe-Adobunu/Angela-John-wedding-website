@@ -39,6 +39,7 @@ const carousel = document.querySelector("[data-carousel]");
 if (carousel) {
   const slides = [...carousel.querySelectorAll("[data-slide]")];
   const dots = [...carousel.querySelectorAll("[data-dot]")];
+  const hero = carousel.closest(".hero");
   const previousButton = carousel.querySelector("[data-previous]");
   const nextButton = carousel.querySelector("[data-next]");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -48,6 +49,7 @@ if (carousel) {
 
   const showSlide = (index) => {
     currentSlide = (index + slides.length) % slides.length;
+    hero?.classList.toggle("is-invitation-slide", currentSlide === 3);
 
     slides.forEach((slide, slideIndex) => {
       const isActive = slideIndex === currentSlide;
