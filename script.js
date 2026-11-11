@@ -1,5 +1,30 @@
 const header = document.querySelector("[data-header]");
 const backToTop = document.querySelector("[data-back-to-top]");
+const menuToggle = document.querySelector("[data-menu-toggle]");
+const primaryNavigation = document.querySelector("#primary-navigation");
+
+const closeMobileMenu = () => {
+  primaryNavigation?.classList.remove("is-open");
+  menuToggle?.setAttribute("aria-expanded", "false");
+  menuToggle?.setAttribute("aria-label", "Open navigation menu");
+};
+
+menuToggle?.addEventListener("click", () => {
+  const isOpen = menuToggle.getAttribute("aria-expanded") !== "true";
+  primaryNavigation?.classList.toggle("is-open", isOpen);
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+});
+
+primaryNavigation?.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", closeMobileMenu);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeMobileMenu();
+});
+
+window.matchMedia("(min-width: 851px)").addEventListener("change", closeMobileMenu);
 
 const updateScrollUI = () => {
   const hasScrolled = window.scrollY > 70;
